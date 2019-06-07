@@ -132,10 +132,29 @@ open class WMAlertController: UIViewController, StackedViewDelegate {
         scrollView.addSubview(contentStack)
         scrollView.constrainSubviewToSize(contentStack)
         
-        NSLayoutConstraint.activate([
-            scrollView.widthAnchor.constraint(equalTo: contentStack.widthAnchor),
-            scrollView.heightAnchor.constraint(equalTo: contentStack.heightAnchor)
-        ])
+        alertView.addConstraint(NSLayoutConstraint(
+            item: scrollView!,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: contentStack,
+            attribute: .width,
+            multiplier: 1,
+            constant: 0
+            )
+        )
+        
+        let scrollViewHeightConstraint = NSLayoutConstraint(
+            item: scrollView!,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: contentStack,
+            attribute: .height,
+            multiplier: 1,
+            constant: 0
+        )
+        self.scrollViewHeightConstraint = scrollViewHeightConstraint
+        scrollView.addConstraint(scrollViewHeightConstraint)
+
         
         switch decoration {
         case .none:
