@@ -26,6 +26,7 @@ class WMAlertIconStyleKit: NSObject {
     // Cache
     struct Cache {
         static var imageOfCheckmark: UIImage?
+        static var imageOfCross: UIImage?
     }
     
     // Drawing Methods
@@ -86,7 +87,19 @@ class WMAlertIconStyleKit: NSObject {
         fillColor.setFill()
         path3491Path.fill()
     }
-    
+
+    class func drawCross() -> UIImage? {
+        let crossView = CrossSymbolView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
+
+        //converting view to image
+        UIGraphicsBeginImageContextWithOptions(crossView.bounds.size, crossView.isOpaque, 0.0)
+        crossView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image  = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+
+
     // Generated Images
     class var imageOfCheckmark: UIImage {
         if Cache.imageOfCheckmark != nil {
@@ -98,5 +111,41 @@ class WMAlertIconStyleKit: NSObject {
         UIGraphicsEndImageContext()
         return Cache.imageOfCheckmark!
     }
-    
+
+    class var imageOfCross: UIImage {
+        if Cache.imageOfCross != nil {
+            return Cache.imageOfCross!
+        }
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 72, height: 72), false, 0)
+        Cache.imageOfCross = WMAlertIconStyleKit.drawCross()
+        return Cache.imageOfCross!
+    }
+
+
+}
+class CrossSymbolView: UIView {
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+
+        let circlePath = UIBezierPath(ovalIn: CGRect(x: bounds.minX-36, y: bounds.midX - 36, width: 72, height: 72))
+        UIColor.red.setFill()
+        circlePath.fill()
+
+        let lineWidth: CGFloat = 10.0
+
+        let firstDiagonal = UIBezierPath()
+        firstDiagonal.lineWidth = lineWidth
+        firstDiagonal.move(to: CGPoint(x: bounds.midX - 20, y: bounds.midY - 20))
+        firstDiagonal.addLine(to: CGPoint(x: bounds.midX + 20, y: bounds.midY + 20))
+
+        let secondDiagonal = UIBezierPath()
+        secondDiagonal.lineWidth = lineWidth
+        secondDiagonal.move(to: CGPoint(x: bounds.midX + 20, y: bounds.midY - 20))
+        secondDiagonal.addLine(to: CGPoint(x: bounds.midX - 20, y: bounds.midY + 20))
+
+        UIColor.white.setStroke()
+
+        firstDiagonal.stroke()
+        secondDiagonal.stroke()
+    }
 }

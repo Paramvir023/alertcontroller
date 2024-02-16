@@ -101,5 +101,5 @@ public extension WMAlertStyle {
 }
 
 public enum WMAlertDecoration {
-    case none, success
+    case none, success, failure
 }

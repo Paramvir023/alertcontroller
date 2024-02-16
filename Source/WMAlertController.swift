@@ -312,7 +312,14 @@ open class WMAlertController: UIViewController, StackedViewDelegate {
         circleView.layer.borderWidth = borderWidth
         circleView.layer.borderColor = UIColor.white.cgColor
         
-        let iconImage = WMAlertIconStyleKit.imageOfCheckmark
+        //let iconImage = WMAlertIconStyleKit.imageOfCheckmark
+        var iconImage: UIImage?
+        if decoration == .success {
+            iconImage = WMAlertIconStyleKit.imageOfCheckmark
+        } else if decoration == .failure {
+            iconImage = WMAlertIconStyleKit.imageOfCheckmark
+        }
+
         let circleIconView = UIImageView(image: iconImage.withRenderingMode(.alwaysTemplate))
         circleIconView.tintColor = UIColor.darkMint()
         circleIconView.backgroundColor = UIColor.clear
