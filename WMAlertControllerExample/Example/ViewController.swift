@@ -80,6 +80,17 @@ class ViewController: UIViewController {
         )
         self.present(alertController, animated: true, completion: nil)
     }
-    
+
+    @IBAction func failureAlert(_ sender: Any) {
+        let alertController = WMAlertController(title: "Failure!", message: "Sorry, something went wrong", style: .light, decoration: .failure)
+        alertController.addAction(
+            WMAlertAction(title: "DISMISS", handler: { (action) in
+                NSLog("Pressed Dismiss!")
+                action.alert?.dismiss(animated: true, completion: nil)
+            })
+        )
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 }
 

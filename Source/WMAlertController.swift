@@ -321,8 +321,8 @@ open class WMAlertController: UIViewController, StackedViewDelegate {
         }
 
         let circleIconView = UIImageView(image: iconImage.withRenderingMode(.alwaysTemplate))
-        circleIconView.tintColor = UIColor.darkMint()
-        circleIconView.backgroundColor = UIColor.clear
+        circleIconView.tintColor = decoration == .success ? .darkMint(): .white
+        circleIconView.backgroundColor = decoration == .success ? .clear: .red
         circleIconView.layer.cornerRadius = (circleSize - borderWidth - borderWidth) / 2
         circleIconView.translatesAutoresizingMaskIntoConstraints = false
         

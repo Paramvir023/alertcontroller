@@ -88,18 +88,24 @@ class WMAlertIconStyleKit: NSObject {
         path3491Path.fill()
     }
 
-    class func drawCross() -> UIImage? {
-        let crossView = CrossSymbolView(frame: CGRect(x: 0, y: 0, width: 72, height: 72))
+    // Drawing Methods
+    class func drawCross(size: CGSize) {
 
-        //converting view to image
-        UIGraphicsBeginImageContextWithOptions(crossView.bounds.size, crossView.isOpaque, 0.0)
-        crossView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image  = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
+        let xPath = UIBezierPath()
+        let lineWidth: CGFloat = 10.0
+        let startX: CGFloat = size.width * 0.25
+        let startY: CGFloat = size.height * 0.25
+        let endX: CGFloat = size.width * 0.75
+        let endY: CGFloat = size.height * 0.75
+
+        xPath.move(to: CGPoint(x: startX, y: startY))
+        xPath.addLine(to: CGPoint(x: endX, y: endY))
+        xPath.move(to: CGPoint(x: endX, y: startY))
+        xPath.addLine(to: CGPoint(x: startX, y: endY))
+
+        xPath.lineWidth = lineWidth
+        xPath.stroke()
     }
-
-
     // Generated Images
     class var imageOfCheckmark: UIImage {
         if Cache.imageOfCheckmark != nil {
@@ -113,39 +119,14 @@ class WMAlertIconStyleKit: NSObject {
     }
 
     class var imageOfCross: UIImage {
-        if Cache.imageOfCross != nil {
+        if Cache.imageOfCheckmark != nil {
             return Cache.imageOfCross!
         }
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 72, height: 72), false, 0)
-        Cache.imageOfCross = WMAlertIconStyleKit.drawCross()
+        WMAlertIconStyleKit.drawCross(size: CGSize(width: 72, height: 72))
+        Cache.imageOfCross = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         return Cache.imageOfCross!
     }
-
-
 }
-class CrossSymbolView: UIView {
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
 
-        let circlePath = UIBezierPath(ovalIn: CGRect(x: bounds.minX-36, y: bounds.midX - 36, width: 72, height: 72))
-        UIColor.red.setFill()
-        circlePath.fill()
-
-        let lineWidth: CGFloat = 10.0
-
-        let firstDiagonal = UIBezierPath()
-        firstDiagonal.lineWidth = lineWidth
-        firstDiagonal.move(to: CGPoint(x: bounds.midX - 20, y: bounds.midY - 20))
-        firstDiagonal.addLine(to: CGPoint(x: bounds.midX + 20, y: bounds.midY + 20))
-
-        let secondDiagonal = UIBezierPath()
-        secondDiagonal.lineWidth = lineWidth
-        secondDiagonal.move(to: CGPoint(x: bounds.midX + 20, y: bounds.midY - 20))
-        secondDiagonal.addLine(to: CGPoint(x: bounds.midX - 20, y: bounds.midY + 20))
-
-        UIColor.white.setStroke()
-
-        firstDiagonal.stroke()
-        secondDiagonal.stroke()
-    }
-}
