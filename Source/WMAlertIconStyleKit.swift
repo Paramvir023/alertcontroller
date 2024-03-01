@@ -119,7 +119,7 @@ class WMAlertIconStyleKit: NSObject {
     }
 
     class var imageOfCross: UIImage {
-        if Cache.imageOfCheckmark != nil {
+        if Cache.imageOfCross != nil {
             return Cache.imageOfCross!
         }
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 72, height: 72), false, 0)
